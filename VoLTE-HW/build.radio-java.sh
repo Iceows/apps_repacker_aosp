@@ -10,15 +10,15 @@ fi
 app_folder="$(realpath $1)"
 
 rm -f HwIms_classes.cdex
-../vdexExtractor -i "$app_folder"/oat/arm64/HwIms.vdex -o .
+../Tools/vdexExtractor -i "$app_folder"/oat/arm64/HwIms.vdex -o .
 
 rm -f HwIms_classes.cdex.new
-../compact_dex_converter HwIms_classes.cdex
+../Tools/compact_dex_converter HwIms_classes.cdex
 
 rm -f HwIms_classes.cdex-dex2jar.jar
-../dex2jar/d2j-dex2jar.sh HwIms_classes.cdex.new
+../Tools/dex2jar/d2j-dex2jar.sh HwIms_classes.cdex.new
 
 rm -f vendor.huawei.hardware.radio-java.jar
-../dex2jar/d2j-class-version-switch.sh 8 HwIms_classes.cdex-dex2jar.jar vendor.huawei.hardware.radio-java.jar
+../Tools/dex2jar/d2j-class-version-switch.sh 8 HwIms_classes.cdex-dex2jar.jar vendor.huawei.hardware.radio-java.jar
 
 zip -qd vendor.huawei.hardware.radio-java.jar 'android/*' 'com/*'
